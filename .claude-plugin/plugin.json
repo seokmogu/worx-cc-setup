@@ -8,5 +8,6 @@
   "repository": "https://github.com/seokmogu/worx-cc-setup",
   "homepage": "https://github.com/seokmogu/worx-cc-setup",
   "license": "MIT",
-  "keywords": ["setup", "onboarding", "worxphere"]
+  "keywords": ["setup", "onboarding", "worxphere"],
+  "skills": "./skills/"
 }
