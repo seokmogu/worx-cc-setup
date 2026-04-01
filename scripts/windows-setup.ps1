@@ -1,43 +1,35 @@
-# Worxphere Windows 사전 설치 스크립트
-# 실행 방법: PowerShell을 관리자 모드로 열고 아래 명령 실행
+# Worxphere Windows Pre-Setup Script
+# Run in PowerShell (Administrator):
 #   Set-ExecutionPolicy Bypass -Scope Process -Force
-#   irm https://raw.githubusercontent.com/seokmogu/worx-cc-setup/main/scripts/windows-setup.ps1 | iex
+#   Invoke-WebRequest -Uri "https://raw.githubusercontent.com/seokmogu/worx-cc-setup/main/scripts/windows-setup.ps1" -OutFile "$env:TEMP\worx-setup.ps1"
+#   & "$env:TEMP\worx-setup.ps1"
 
 param(
     [switch]$SkipWslInstall
 )
 
 $ErrorActionPreference = "Stop"
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 function Write-Step($msg) { Write-Host "`n[STEP] $msg" -ForegroundColor Cyan }
 function Write-OK($msg)   { Write-Host "  [OK] $msg" -ForegroundColor Green }
 function Write-Warn($msg) { Write-Host "  [!!] $msg" -ForegroundColor Yellow }
 function Write-Err($msg)  { Write-Host " [ERR] $msg" -ForegroundColor Red }
 
-Write-Host @"
+Write-Host "`n  Worxphere CC Setup - Windows Pre-Setup Script`n" -ForegroundColor Magenta
 
-  ██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗
-  ██║    ██║██╔═══██╗██╔══██╗╚██╗██╔╝
-  ██║ █╗ ██║██║   ██║██████╔╝ ╚███╔╝
-  ██║███╗██║██║   ██║██╔══██╗ ██╔██╗
-  ╚███╔███╔╝╚██████╔╝██║  ██║██╔╝ ██╗
-   ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
-  CC Setup - Windows 사전 설치 스크립트
-
-"@ -ForegroundColor Magenta
-
-# ── 1. 관리자 권한 확인 ──────────────────────────────────────────
-Write-Step "관리자 권한 확인"
+# 1. Admin check
+Write-Step "Checking administrator privileges"
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (-not $isAdmin) {
-    Write-Err "관리자 권한이 필요합니다."
-    Write-Warn "PowerShell을 '관리자 권한으로 실행'한 후 다시 시도하세요."
+    Write-Err "Administrator privileges required."
+    Write-Warn "Right-click PowerShell and select 'Run as Administrator', then retry."
     exit 1
 }
-Write-OK "관리자 권한 확인됨"
+Write-OK "Administrator privileges confirmed"
 
-# ── 2. WSL2 설치 확인 ─────────────────────────────────────────────
-Write-Step "WSL2 상태 확인"
+# 2. WSL2 check
+Write-Step "Checking WSL2 status"
 $wslInstalled = $false
 try {
     $wslStatus = wsl --status 2>&1
@@ -45,64 +37,61 @@ try {
 } catch {}
 
 if (-not $wslInstalled -and -not $SkipWslInstall) {
-    Write-Warn "WSL2가 설치되어 있지 않습니다. 설치를 시작합니다..."
+    Write-Warn "WSL2 not found. Installing..."
     wsl --install
-    Write-Warn @"
-
-  WSL2 설치가 완료되었습니다.
-  PC를 재시작한 후 Ubuntu 터미널을 열고 다음 명령을 실행하세요:
-
-    curl -fsSL https://raw.githubusercontent.com/seokmogu/worx-cc-setup/main/scripts/ubuntu-bootstrap.sh | bash
-
-"@
-    Write-Host "지금 재시작하시겠습니까? (y/N): " -NoNewline
+    Write-Warn ""
+    Write-Warn "WSL2 installation complete. A restart is required."
+    Write-Warn "After restart, open Ubuntu terminal and run:"
+    Write-Warn ""
+    Write-Warn "  curl -fsSL https://raw.githubusercontent.com/seokmogu/worx-cc-setup/main/scripts/ubuntu-bootstrap.sh | bash"
+    Write-Warn ""
+    Write-Host "Restart now? (y/N): " -NoNewline
     $restart = Read-Host
     if ($restart -eq 'y' -or $restart -eq 'Y') { Restart-Computer -Force }
     exit 0
 } elseif ($wslInstalled) {
-    Write-OK "WSL2 설치 확인됨"
+    Write-OK "WSL2 confirmed"
 } else {
-    Write-OK "WSL2 설치 건너뜀 (--SkipWslInstall)"
+    Write-OK "WSL2 install skipped (-SkipWslInstall)"
 }
 
-# ── 3. Ubuntu 배포판 확인 ─────────────────────────────────────────
-Write-Step "Ubuntu 배포판 확인"
+# 3. Ubuntu distro check
+Write-Step "Checking Ubuntu distro"
 $distros = wsl --list --quiet 2>&1 | Where-Object { $_ -match "Ubuntu" }
 if (-not $distros) {
-    Write-Warn "Ubuntu가 없습니다. Ubuntu 22.04 LTS를 설치합니다..."
+    Write-Warn "Ubuntu not found. Installing Ubuntu 22.04 LTS..."
     wsl --install -d Ubuntu-22.04
-    Write-Warn "Ubuntu 초기 설정(사용자명/비밀번호)을 완료한 후 이 스크립트를 다시 실행하세요."
+    Write-Warn "Complete Ubuntu initial setup (username/password), then re-run this script."
     exit 0
 }
-Write-OK "Ubuntu 배포판 확인됨: $($distros -join ', ')"
+Write-OK "Ubuntu found: $($distros -join ', ')"
 
-# ── 4. Ubuntu 안에서 bootstrap 실행 ──────────────────────────────
-Write-Step "Ubuntu에서 Node.js + Claude Code 설치 시작"
-Write-Host "  (완료까지 1~2분 소요됩니다...)`n"
+# 4. Run bootstrap inside Ubuntu
+Write-Step "Running Node.js + Claude Code installer inside Ubuntu"
+Write-Host "  (this may take 1-2 minutes...)`n"
 
 wsl bash -c "curl -fsSL https://raw.githubusercontent.com/seokmogu/worx-cc-setup/main/scripts/ubuntu-bootstrap.sh | bash"
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Err "Ubuntu 부트스트랩 실패. ubuntu-bootstrap.sh 로그를 확인하세요."
+    Write-Err "Ubuntu bootstrap failed. Check the output above."
     exit 1
 }
 
-# ── 5. 완료 안내 ──────────────────────────────────────────────────
+# 5. Done
+Write-Host "`n  SUCCESS!" -ForegroundColor Green
 Write-Host @"
 
-  ✅  설치 완료!
-
-  다음 단계:
-  1. Ubuntu 터미널을 열고 실행:
+  Next steps:
+  1. Open Ubuntu terminal and run:
        claude
 
-  2. Anthropic 계정으로 로그인
+  2. Login with your Anthropic account
 
-  3. 로그인 후 아래 명령 입력:
+  3. After login, enter these commands:
        /plugin marketplace add https://github.com/seokmogu/worx-cc-setup
        /plugin install worx-cc-setup
        /worx-cc-setup
 
-  Claude가 나머지 개발 환경을 자동으로 설치합니다.
+  Claude will automatically install the remaining dev tools.
 
 "@ -ForegroundColor Green
