@@ -26,7 +26,11 @@ claude
 
 #### Windows (WSL2)
 
-**PowerShell을 관리자 모드로 열고** 아래 두 줄을 순서대로 실행:
+**PowerShell을 관리자 모드로 열고** 아래 세 줄을 순서대로 실행:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+```
 
 ```powershell
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/seokmogu/worx-cc-setup/main/scripts/windows-setup.ps1" -OutFile "$env:TEMP\worx-setup.ps1"

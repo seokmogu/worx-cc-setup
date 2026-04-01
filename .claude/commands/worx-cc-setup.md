@@ -41,9 +41,17 @@ brew --version 2>/dev/null
 이미 있으면 건너뜀.
 
 **Install (없을 때):**
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+
+Homebrew 설치 스크립트는 sudo 비밀번호 입력을 요구하므로 사용자가 직접 실행해야 한다.
+사용자에게 안내:
+
+> Homebrew가 설치되어 있지 않습니다. 아래 명령을 Claude Code 입력창에 붙여넣어 주세요:
+>
+> `! /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+>
+> 설치 중 비밀번호 입력이 필요합니다. 완료 후 알려주세요.
+
+사용자가 완료 확인 후 다음 검증으로 진행.
 
 **설치 후 PATH 적용:**
 ```bash
@@ -156,6 +164,16 @@ $HOME/.local/bin/uv --version
 ---
 
 ### Step 5: oh-my-claudecode (사용자 직접 입력 필요)
+
+**Check (설치 여부 확인):**
+```bash
+ls ~/.claude/plugins/oh-my-claudecode 2>/dev/null && echo "INSTALLED" || echo "NOT_INSTALLED"
+```
+
+이미 설치되어 있으면 ("INSTALLED") 건너뜀. 사용자에게:
+> oh-my-claudecode가 이미 설치되어 있습니다. 다음 단계로 넘어갑니다.
+
+**Install (NOT_INSTALLED일 때):**
 
 Slash command는 bash에서 실행할 수 없어 사용자가 직접 입력해야 한다.
 
@@ -346,7 +364,12 @@ locale -a | grep ko
 
 ### Step 7: oh-my-claudecode (사용자 직접 입력 필요)
 
-macOS Step 5와 동일하게 사용자에게 slash command 직접 입력 안내.
+macOS Step 5와 동일. 먼저 설치 여부를 확인한다:
+```bash
+ls ~/.claude/plugins/oh-my-claudecode 2>/dev/null && echo "INSTALLED" || echo "NOT_INSTALLED"
+```
+
+이미 설치되어 있으면 건너뜀. 없으면 macOS Step 5와 동일하게 사용자에게 slash command 직접 입력 안내.
 
 ---
 
