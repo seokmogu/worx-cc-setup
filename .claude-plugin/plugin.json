@@ -1,0 +1,12 @@
+{
+  "name": "worx-cc-setup",
+  "version": "1.0.0",
+  "description": "신규 입사자 개발 환경 자동 설치",
+  "author": {
+    "name": "seokmogu"
+  },
+  "repository": "https://github.com/seokmogu/worx-cc-setup",
+  "homepage": "https://github.com/seokmogu/worx-cc-setup",
+  "license": "MIT",
+  "keywords": ["setup", "onboarding", "worxphere"]
+}
