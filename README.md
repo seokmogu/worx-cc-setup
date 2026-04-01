@@ -4,38 +4,65 @@
 
 ---
 
-## Windows 사용자 — Claude Code 설치 전 먼저 실행
+## 전체 순서
 
-Claude Code가 없는 초기 상태라면 아래 스크립트로 WSL2 + Node.js + Claude Code를 자동 설치합니다.
+### Step 1 — VS Code 설치
 
-**PowerShell을 관리자 모드로 열고** 아래 한 줄 실행:
+[code.visualstudio.com](https://code.visualstudio.com) 에서 인스톨러 다운로드 후 설치.
+
+---
+
+### Step 2 — Claude Code 설치
+
+#### Mac
+
+터미널에서 실행:
+
+```bash
+brew install node
+npm install -g @anthropic-ai/claude-code
+claude
+```
+
+#### Windows (WSL2)
+
+**PowerShell을 관리자 모드로 열고** 아래 두 줄을 순서대로 실행:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; irm https://raw.githubusercontent.com/seokmogu/worx-cc-setup/main/scripts/windows-setup.ps1 | iex
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/seokmogu/worx-cc-setup/main/scripts/windows-setup.ps1" -OutFile "$env:TEMP\worx-setup.ps1"
+```
+
+```powershell
+& "$env:TEMP\worx-setup.ps1"
 ```
 
 > **관리자 모드로 여는 방법**: 시작 메뉴 → PowerShell 우클릭 → "관리자 권한으로 실행"
 
-스크립트가 완료되면 Ubuntu 터미널을 열고 `claude`를 실행해 로그인합니다.
+스크립트 완료 후 Ubuntu 터미널을 열고 `claude`를 실행해 로그인.
 
 ---
 
-## Claude Code 플러그인 설치 (로그인 후)
+### Step 3 — 플러그인 설치
+
+Claude Code 로그인 후 아래 두 줄 입력:
 
 ```
 /plugin marketplace add https://github.com/seokmogu/worx-cc-setup
+```
+
+```
 /plugin install worx-cc-setup
 ```
 
-## 사용
+---
+
+### Step 4 — 개발 환경 자동 설치
 
 ```
 /worx-cc-setup
 ```
 
-실행하면 OS를 자동 감지하고 아래 항목을 순서대로 설치합니다.
-
-## 설치되는 항목
+OS를 자동 감지하고 아래 항목을 순서대로 설치합니다.
 
 | 항목 | 설명 |
 |------|------|
@@ -47,10 +74,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; irm https://raw.githubusercont
 
 Windows/WSL 환경에서는 추가로 Google Chrome과 한국어 로캘이 설치됩니다.
 
-## 전제 조건
-
-- VS Code 설치 완료 ([code.visualstudio.com](https://code.visualstudio.com))
-- Claude Code 설치 및 로그인 완료 (위 Windows 스크립트 또는 직접 설치)
+---
 
 ## 문제가 생기면
 
