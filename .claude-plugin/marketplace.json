@@ -1,0 +1,24 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "worx-cc-setup",
+  "description": "신규 입사자 개발 환경 자동 설치 — Claude Code 로그인 후 /worx-cc-setup 한 줄로 완료",
+  "owner": {
+    "name": "seokmogu",
+    "email": ""
+  },
+  "plugins": [
+    {
+      "name": "worx-cc-setup",
+      "description": "신규 입사자 개발 환경 자동 설치 (Python, Git, uv, oh-my-claudecode, Chrome 확장)",
+      "version": "1.0.0",
+      "author": {
+        "name": "seokmogu"
+      },
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://github.com/seokmogu/worx-cc-setup",
+      "tags": ["setup", "onboarding", "worxphere"]
+    }
+  ],
+  "version": "1.0.0"
+}

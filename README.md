@@ -40,6 +40,11 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/seokmogu/worx-cc-setup
 
 스크립트 완료 후 Ubuntu 터미널을 열고 `claude`를 실행해 로그인.
 
+> **Ubuntu 터미널 여는 방법**
+> - PowerShell 또는 CMD에서 `wsl` 입력 (가장 확실한 방법)
+> - Windows Terminal 상단 탭의 **▼** 클릭 → Ubuntu 선택
+> - 시작 메뉴에서 "Ubuntu" 검색 (설치 직후에는 안 보일 수 있음 → `wsl` 사용)
+
 ---
 
 ### Step 3 — 플러그인 설치
