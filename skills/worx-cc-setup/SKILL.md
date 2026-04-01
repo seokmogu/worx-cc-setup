@@ -49,13 +49,17 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
 uv --version
 ```
 
-### Step 4: oh-my-claudecode
+### Step 4: oh-my-claudecode (사용자 직접 입력 필요)
 
-Run these slash commands in sequence inside Claude Code:
-1. `/plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode`
-2. `/plugin install oh-my-claudecode`
-3. `/setup`
-4. `/omc-setup`
+Slash command는 bash에서 실행할 수 없으므로, 사용자에게 아래 안내를 제공하고 완료를 기다린다:
+
+> Claude Code 입력창에 아래 명령을 순서대로 입력해 주세요:
+>
+> 1. `/plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode`
+> 2. `/plugin install oh-my-claudecode`
+> 3. `/reload-plugins`
+> 4. `/setup`
+> 5. `/omc-setup`
 
 ### Step 5: Chrome "Claude" Extension
 
@@ -109,25 +113,27 @@ google-chrome --version
 sudo apt-get install -y language-pack-ko
 ```
 
-### Step 6: oh-my-claudecode
+### Step 6: oh-my-claudecode (사용자 직접 입력 필요)
 
-Same as Mac steps 4 above.
+Mac Step 4와 동일하게 사용자에게 slash command 직접 입력을 안내한다.
 
 ### Step 7: Chrome "Claude" Extension
 
-Same as Mac steps 5–6 above.
+Mac Step 5–6과 동일.
 
 ---
 
 ## Final Summary
 
-After all steps complete, print a summary table:
+After all steps complete, run verification commands and print a summary table:
 
-| Component | Version | Status |
-|-----------|---------|--------|
-| Python | (version) | ✓ |
-| Git | (version) | ✓ |
-| uv | (version) | ✓ |
-| Chrome | (version) | ✓ |
-| oh-my-claudecode | installed | ✓ |
-| Chrome Extension | active | ✓ |
+| 구성 요소 | 버전 | 담당 | 상태 |
+|-----------|------|------|------|
+| Python | (version) | Claude 자동 | ✓ |
+| Git | (version) | Claude 자동 | ✓ |
+| uv | (version) | Claude 자동 | ✓ |
+| Chrome | (version) | Claude 자동 (WSL만) | ✓ |
+| oh-my-claudecode | - | 사용자 직접 입력 | 확인 필요 |
+| Chrome 확장 (Claude) | - | 사용자 직접 클릭 | 확인 필요 |
+
+After the table, guide the user to the MCP setup step by asking them to paste their Slack/Notion tokens.

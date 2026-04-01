@@ -94,27 +94,24 @@ Verify installation:
 uv --version
 ```
 
-### Step 4: oh-my-claudecode
+### Step 4: oh-my-claudecode (사용자 직접 입력 필요)
 
-Install the oh-my-claudecode plugin marketplace and run setup:
+oh-my-claudecode는 Claude Code 세션 안에서 slash command로만 설치할 수 있습니다.
+아래 명령을 Claude Code 입력창에 **순서대로 직접 입력**해 주세요.
 
-```bash
-claude /plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode
-```
+Tell the user:
 
-```bash
-claude /plugin install oh-my-claudecode
-```
+> oh-my-claudecode 설치를 위해 아래 명령을 Claude Code 입력창에 순서대로 입력해 주세요:
+>
+> 1. `/plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode`
+> 2. `/plugin install oh-my-claudecode`
+> 3. `/reload-plugins`
+> 4. `/setup`
+> 5. `/omc-setup`
+>
+> 각 명령 실행 후 완료 메시지를 확인하고 다음으로 넘어가세요.
 
-Then run the setup commands:
-
-```bash
-claude /setup
-```
-
-```bash
-claude /omc-setup
-```
+Wait for the user to confirm each step is complete before proceeding.
 
 ### Step 5: Chrome "Claude" Extension
 
@@ -245,27 +242,23 @@ Verify:
 locale -a | grep ko
 ```
 
-### Step 6: oh-my-claudecode
+### Step 6: oh-my-claudecode (사용자 직접 입력 필요)
 
-Install the oh-my-claudecode plugin marketplace and run setup (same as Mac):
+Mac Step 4와 동일합니다. 아래 명령을 Claude Code 입력창에 **순서대로 직접 입력**해 주세요.
 
-```bash
-claude /plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode
-```
+Tell the user:
 
-```bash
-claude /plugin install oh-my-claudecode
-```
+> oh-my-claudecode 설치를 위해 아래 명령을 Claude Code 입력창에 순서대로 입력해 주세요:
+>
+> 1. `/plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode`
+> 2. `/plugin install oh-my-claudecode`
+> 3. `/reload-plugins`
+> 4. `/setup`
+> 5. `/omc-setup`
+>
+> 각 명령 실행 후 완료 메시지를 확인하고 다음으로 넘어가세요.
 
-Then run the setup commands:
-
-```bash
-claude /setup
-```
-
-```bash
-claude /omc-setup
-```
+Wait for the user to confirm each step is complete before proceeding.
 
 ### Step 7: Chrome "Claude" Extension
 
@@ -291,9 +284,7 @@ Guide the user to verify the extension (same as Mac Step 6):
 
 ## Final Summary
 
-After all steps are complete, print a summary table showing the installation results.
-
-Run the following verification commands and compile results:
+After all steps are complete, run the following verification commands and compile results:
 
 ```bash
 python3 --version 2>/dev/null || python3.12 --version 2>/dev/null
@@ -301,14 +292,31 @@ git --version 2>/dev/null
 uv --version 2>/dev/null
 ```
 
-Then display a table in this format:
+Then display a summary table:
 
-| 구성 요소 | 설치된 버전 | 상태 |
-|-----------|------------|------|
-| Python    | 3.12.x     | ✓    |
-| Git       | 2.x.x      | ✓    |
-| uv        | 0.x.x      | ✓    |
-| oh-my-claudecode | -   | ✓    |
-| Chrome 확장 (Claude) | - | 수동 확인 필요 |
+| 구성 요소 | 설치된 버전 | 담당 | 상태 |
+|-----------|------------|------|------|
+| Python    | 3.12.x     | Claude 자동 | ✓ |
+| Git       | 2.x.x      | Claude 자동 | ✓ |
+| uv        | 0.x.x      | Claude 자동 | ✓ |
+| oh-my-claudecode | -   | 사용자 직접 입력 | 확인 필요 |
+| Chrome 확장 (Claude) | - | 사용자 직접 클릭 | 확인 필요 |
 
-If any step failed, mark it with ✗ and explain what went wrong.
+If any Claude-automated step failed, mark it with ✗ and explain what went wrong.
+
+After displaying the table, tell the user:
+
+> **다음 단계 — MCP 연동 (선택)**
+>
+> Slack과 Notion을 연결하려면, 발급받은 토큰을 아래 형식으로 붙여넣어 주세요.
+> Claude가 `claude mcp add` 명령을 자동으로 실행합니다.
+>
+> ```
+> MCP 연동을 설정해줘.
+> - Slack Bot Token: xoxb-{내 토큰}
+> - Slack Team ID: T{내 팀ID}
+> - Notion API 키: ntn_{내 키}
+> 위 정보로 Slack MCP와 Notion MCP를 연결하고 동작 확인까지 해줘.
+> ```
+>
+> 토큰이 아직 없다면 [사전 준비 가이드](https://www.notion.so/worxphere/5cfa0407c6984f9f821af962d32e1e7a)를 참고하세요.
