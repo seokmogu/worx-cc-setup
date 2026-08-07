@@ -1,7 +1,0 @@
-{
-  "tool_name": "WebFetch",
-  "tool_input_preview": "{\"url\":\"https://api.github.com/repos/Yeachan-Heo/oh-my-claudecode/contents\",\"prompt\":\"List all files and directories at the root of the repo\"}",
-  "error": "Request failed with status code 403",
-  "timestamp": "2026-04-01T04:51:12.073Z",
-  "retry_count": 1
-}
